@@ -1,0 +1,1 @@
+ This is an Android  Application and was developed in Java and xml.An android Application which shows the level of water content in Uganda from previous to current years. It has a live Api which shows the total Number of 49 grid areas on which Uganda is placed on a map.
