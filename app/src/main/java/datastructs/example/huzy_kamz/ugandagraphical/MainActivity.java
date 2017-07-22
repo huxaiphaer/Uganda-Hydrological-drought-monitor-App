@@ -14,7 +14,6 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -44,12 +43,18 @@ public class MainActivity extends AppCompatActivity {
         yeartxt = (TextView) findViewById(R.id.year_txt);
         monthtxt = (TextView) findViewById(R.id.month_txt);
 
+        //Adding toolbar title.
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Graphical Presentation");
 
         //Elements of Sort By
         final String sort[] = {"Months", "Year"};
         ArrayAdapter<String> srtAdap = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, sort);
         srtAdap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortby.setAdapter(srtAdap);
+        // sortby.setDrawingCacheBackgroundColor(Color.GREEN);
         sortby.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -89,13 +94,17 @@ public class MainActivity extends AppCompatActivity {
                 int a = (selectPoint.getSelectedItemPosition()) + 1;
                 int b = (selectMonth.getSelectedItemPosition()) + 1;
                 int Logic = sortby.getSelectedItemPosition();
-                Toast.makeText(MainActivity.this, "Point : " + a + " Year : " + b, Toast.LENGTH_LONG).show();
+                // Toast.makeText(MainActivity.this, "Point : " + a + " Year : " + b, Toast.LENGTH_LONG).show();
                 if (Logic == 0) {
                     PopulatingGraphByMonths(a, b, Logic);
                 } else {
-                    String yr = selectYear.getSelectedItem().toString();
-                    int YrInt = Integer.parseInt(yr);
-                    PopulatingGraphByMonths(a, YrInt, Logic);
+                    try {
+                        String yr = selectYear.getSelectedItem().toString();
+                        int YrInt = Integer.parseInt(yr);
+                        PopulatingGraphByMonths(a, YrInt, Logic);
+                    } catch (Exception e) {
+
+                    }
                 }
 
 
@@ -106,10 +115,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        final String sortByItems[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
-                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28",
-                "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43",
-                "44", "45", "46", "47", "48", "49"};
+        final String sortByItems[] = {"  1  ", "  2  ", "  3  ", "  4  ", "  5  ", "  6  ", "  7  ", "  8  ", "  9  ",
+                "  10  ", "  11  ",
+                "  12  ", "  13  ", "  14  ", "  15  ", "  16  ", "  17  ", "  18  ", "  19  ", "  20  ",
+                "  21  ", "  22  ", "  23  ", "  24  ", "  25  ", "  26  ", "  27  ", "  28  ",
+                "  29  ", "  30  ", "  31  ", "  32  ", "  33  ", "  34  ", "  35  ", "  36  ", "  37  ",
+                "  38  ", "  39  ", "  40  ", "  41  ", "  42  ", "  43  ",
+                "  44  ", "  45  ", "  46  ", "  47  ", "  48  ", "  49  "};
         ArrayAdapter<String> resdap = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, sortByItems);
         resdap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Attach the Adapter.
@@ -121,13 +133,18 @@ public class MainActivity extends AppCompatActivity {
                 int a = (selectPoint.getSelectedItemPosition()) + 1;
                 int b = (selectMonth.getSelectedItemPosition()) + 1;
                 int Logic = sortby.getSelectedItemPosition();
-                Toast.makeText(MainActivity.this, "Point : " + a + " Year : " + b, Toast.LENGTH_LONG).show();
+                // Toast.makeText(MainActivity.this, "Point : " + a + " Year : " + b, Toast.LENGTH_LONG).show();
                 if (Logic == 0) {
                     PopulatingGraphByMonths(a, b, Logic);
                 } else {
-                    String yr = selectYear.getSelectedItem().toString();
-                    int YrInt = Integer.parseInt(yr);
-                    PopulatingGraphByMonths(a, YrInt, Logic);
+
+                    try {
+                        String yr = selectYear.getSelectedItem().toString();
+                        int YrInt = Integer.parseInt(yr);
+                        PopulatingGraphByMonths(a, YrInt, Logic);
+                    } catch (Exception e) {
+
+                    }
                 }
 
             }
@@ -253,15 +270,19 @@ public class MainActivity extends AppCompatActivity {
                                         String X = "" + data.getMONTHS();
                                         labels.add(X);
                                     }
-                                    LineDataSet dataset = new LineDataSet(entries, "Water Content Points");
+                                    LineDataSet dataset = new LineDataSet(entries, " Terrestrial water storage points");
                                     LineData data = new LineData(labels, dataset);
-                                    dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
+                                    //dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
                                     dataset.setDrawCubic(true);
                                     dataset.setDrawFilled(true);
                                     lineChart.getAxisRight().setStartAtZero(false);
                                     lineChart.getAxisLeft().setStartAtZero(false);
+                                    lineChart.isSoundEffectsEnabled();
+                                    //  lineChart.notify();
                                     lineChart.setData(data);
+
                                     lineChart.animateY(5000);
+
                                     pd.dismiss();
 
                                 }

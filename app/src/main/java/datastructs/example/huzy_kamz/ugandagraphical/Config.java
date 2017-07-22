@@ -6,5 +6,5 @@ package datastructs.example.huzy_kamz.ugandagraphical;
 
 public class Config {
     public static String weblink="http://10.0.2.2:8093";
-    public  static String mobile="http://192.168.43.104:8093";
+    public  static String mobile="http://police.eamobiledirectory.com";
 }
